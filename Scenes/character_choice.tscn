@@ -7,16 +7,23 @@
 script = ExtResource("1_xjjin")
 
 [node name="DemoCharacter" type="Sprite2D" parent="."]
-position = Vector2(508, 360)
+position = Vector2(270, 358)
 texture = ExtResource("1_ch6xq")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 391.0
+offset_top = 175.0
+offset_right = 820.0
+offset_bottom = 271.0
+text = "Welcome! Select a class below to view more info, and click the start button when you are ready!"
 
 [node name="Choices" type="Node" parent="."]
 
 [node name="Buttons" type="VBoxContainer" parent="Choices"]
 offset_left = 192.0
-offset_top = 37.0
+offset_top = 12.0
 offset_right = 826.0
-offset_bottom = 68.0
+offset_bottom = 120.0
 
 [node name="warrior_button" type="Button" parent="Choices/Buttons"]
 layout_mode = 2
@@ -55,6 +62,14 @@ offset_top = 559.0
 offset_right = 728.0
 offset_bottom = 612.0
 text = "You are a master at pickpocketing. Once per game, you can steal 1d4 of your opponent's roll."
+
+[node name="start_button" type="Button" parent="."]
+visible = false
+offset_left = 394.0
+offset_top = 244.0
+offset_right = 723.0
+offset_bottom = 275.0
+text = "START!"
 
 [connection signal="pressed" from="Choices/Buttons/warrior_button" to="." method="_on_warrior_button_pressed"]
 [connection signal="pressed" from="Choices/Buttons/healer_button" to="." method="_on_healer_button_pressed"]
