@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1wvmx8w4qqlq"]
+
+[ext_resource type="Texture2D" uid="uid://do5fu0nubqs27" path="res://Resources/Demo Character.png" id="1_ch6xq"]
+[ext_resource type="Script" uid="uid://c640ymimyvrbh" path="res://Scripts/character_choice.gd" id="1_xjjin"]
+
+[node name="CharacterChoice" type="Node2D"]
+script = ExtResource("1_xjjin")
+
+[node name="DemoCharacter" type="Sprite2D" parent="."]
+position = Vector2(508, 360)
+texture = ExtResource("1_ch6xq")
+
+[node name="Choices" type="Node" parent="."]
+
+[node name="Buttons" type="VBoxContainer" parent="Choices"]
+offset_left = 192.0
+offset_top = 37.0
+offset_right = 826.0
+offset_bottom = 68.0
+
+[node name="warrior_button" type="Button" parent="Choices/Buttons"]
+layout_mode = 2
+text = "Warrior"
+
+[node name="healer_button" type="Button" parent="Choices/Buttons"]
+layout_mode = 2
+text = "Healer"
+
+[node name="thief_button" type="Button" parent="Choices/Buttons"]
+layout_mode = 2
+text = "Thief"
+
+[node name="Class Info" type="Node" parent="."]
+
+[node name="warrior_info" type="RichTextLabel" parent="Class Info"]
+visible = false
+offset_left = 296.0
+offset_top = 561.0
+offset_right = 742.0
+offset_bottom = 612.0
+text = "You have a shield. Once per game, you can block 1d4 of damage from your opponent."
+
+[node name="healer_info" type="RichTextLabel" parent="Class Info"]
+visible = false
+offset_left = 330.0
+offset_top = 559.0
+offset_right = 690.0
+offset_bottom = 609.0
+text = "You have magical healing abilities. Once per game, you can heal yourself for 1d4 HP."
+
+[node name="thief_info" type="RichTextLabel" parent="Class Info"]
+visible = false
+offset_left = 330.0
+offset_top = 559.0
+offset_right = 728.0
+offset_bottom = 612.0
+text = "You are a master at pickpocketing. Once per game, you can steal 1d4 of your opponent's roll."
+
+[connection signal="pressed" from="Choices/Buttons/warrior_button" to="." method="_on_warrior_button_pressed"]
+[connection signal="pressed" from="Choices/Buttons/healer_button" to="." method="_on_healer_button_pressed"]
+[connection signal="pressed" from="Choices/Buttons/thief_button" to="." method="_on_thief_button_pressed"]
