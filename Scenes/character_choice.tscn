@@ -7,7 +7,7 @@
 script = ExtResource("1_xjjin")
 
 [node name="DemoCharacter" type="Sprite2D" parent="."]
-position = Vector2(270, 358)
+position = Vector2(277, 358)
 texture = ExtResource("1_ch6xq")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
