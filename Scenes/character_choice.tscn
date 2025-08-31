@@ -11,10 +11,10 @@ position = Vector2(277, 358)
 texture = ExtResource("1_ch6xq")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 391.0
-offset_top = 175.0
-offset_right = 820.0
-offset_bottom = 271.0
+offset_left = 395.0
+offset_top = 166.0
+offset_right = 824.0
+offset_bottom = 262.0
 text = "Welcome! Select a class below to view more info, and click the start button when you are ready!"
 
 [node name="Choices" type="Node" parent="."]
