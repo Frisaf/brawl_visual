@@ -6,7 +6,6 @@ extends Node2D
 @onready var start_button: Button = $start_button
 
 var selected_class = ""
-var player_class = ""
 
 func _on_warrior_button_pressed() -> void:
 	selected_class = "Warrior"
@@ -30,5 +29,5 @@ func _on_thief_button_pressed() -> void:
 	start_button.visible = true
 
 func _on_start_button_pressed() -> void:
-	player_class = selected_class
+	Globals.player_class = selected_class
 	get_tree().change_scene_to_file("res://Scenes/game.tscn")
