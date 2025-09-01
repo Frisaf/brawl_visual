@@ -28,3 +28,7 @@ func _on_thief_button_pressed() -> void:
 	healer_info.visible = false
 	thief_info.visible = true
 	start_button.visible = true
+
+func _on_start_button_pressed() -> void:
+	player_class = selected_class
+	get_tree().change_scene_to_file("res://Scenes/game.tscn")
