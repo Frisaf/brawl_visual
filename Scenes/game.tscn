@@ -36,9 +36,31 @@ offset_right = 815.0
 offset_bottom = 554.0
 text = "Class: "
 
+[node name="PlayerHP" type="RichTextLabel" parent="."]
+offset_left = 89.0
+offset_top = 83.0
+offset_right = 241.0
+offset_bottom = 123.0
+text = "Player HP: "
+
+[node name="EnemyHP" type="RichTextLabel" parent="."]
+offset_left = 648.0
+offset_top = 159.0
+offset_right = 800.0
+offset_bottom = 199.0
+text = "Enemy HP: "
+
+[node name="InfoMessage" type="RichTextLabel" parent="."]
+offset_left = 355.0
+offset_top = 227.0
+offset_right = 563.0
+offset_bottom = 354.0
+
 [node name="AttackButton" type="Button" parent="."]
 offset_left = 353.0
 offset_top = 16.0
 offset_right = 598.0
 offset_bottom = 116.0
 text = "ATTACK"
+
+[connection signal="pressed" from="AttackButton" to="." method="_on_attack_button_pressed"]
