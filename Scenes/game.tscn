@@ -4,8 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://do5fu0nubqs27" path="res://Resources/Demo Character.png" id="2_3dryh"]
 [ext_resource type="Texture2D" uid="uid://brdiuwmrgn2fv" path="res://Resources/Demo Enemy.png" id="3_wowpa"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("round_indicator", "choice_yes", "choice_no", "next_round_button")]
 script = ExtResource("1_wrm1d")
+round_indicator = NodePath("RoundIndicator")
+choice_yes = NodePath("ButtonContainer/ChoiceYes")
+choice_no = NodePath("ButtonContainer/ChoiceNo")
+next_round_button = NodePath("ButtonContainer/NextRoundButton")
 
 [node name="DemoCharacter" type="Sprite2D" parent="."]
 position = Vector2(169, 317)
@@ -81,4 +85,14 @@ layout_mode = 2
 tooltip_text = "Initiate the next round"
 text = "NEXT ROUND"
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 357.0
+offset_top = 587.0
+offset_right = 649.0
+offset_bottom = 627.0
+text = "Press the buttons to make an action."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="ButtonContainer/ChoiceYes" to="." method="_on_choice_yes_pressed"]
 [connection signal="pressed" from="ButtonContainer/NextRoundButton" to="." method="_on_attack_button_pressed"]

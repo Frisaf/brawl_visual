@@ -1,14 +1,16 @@
 extends Node2D
 
-@onready var round_indicator: RichTextLabel = $RoundIndicator
+@export var round_indicator: RichTextLabel
+@export var choice_yes: Button
+@export var choice_no: Button
+@export var next_round_button: Button
+
 @onready var player_class_label: RichTextLabel = $PlayerClass
 @onready var enemy_class_label: RichTextLabel = $EnemyClass
 @onready var player_hp_label: RichTextLabel = $PlayerHP
 @onready var enemy_hp_label: RichTextLabel = $EnemyHP
 @onready var info_message: RichTextLabel = $InfoMessage
 @onready var attack_info: RichTextLabel = $AttackInfo
-@onready var choice_yes: Button = $HBoxContainer/ChoiceYes
-@onready var choice_no: Button = $HBoxContainer/ChoiceNo
 
 const CLASSES = ["Warrior", "Healer", "Thief"]
 
@@ -31,11 +33,27 @@ func _ready() -> void:
 	enemy_class_label.append_text(enemy_class)
 	player_hp_label.append_text(str(player_hp))
 	enemy_hp_label.append_text(str(enemy_hp))
+	next_round_button.disabled = true
+	
+	if player_class == "Warrior":
+		choice_yes.text = "Block"
+		choice_no.text = "Don't block"
+	
+	elif player_class == "Healer":
+		choice_yes.text = "Heal"
+		choice_no.text = "Don't heal"
+	
+	elif player_class == "Thief":
+		choice_yes.text = "Steal"
+		choice_no.text = "Don't steal"
+
+func _on_choice_yes_pressed() -> void:
+	pass # Replace with function body.
 
 func player_action(choice):
 	if player_class == "Warrior" and player_blocked == false and choice == 1:
-		choice_yes.set_text("Block")
-		choice_no.set_text("Don't block") # Something needs fixing here for it to work
+		choice_yes.text = "Block"
+		choice_no.text = "Don't block"
 
 func enemy_counteraction(choice):
 	if enemy_class == "Warrior" and enemy_blocked == false and choice == 1:
