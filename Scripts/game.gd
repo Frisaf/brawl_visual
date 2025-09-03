@@ -4,6 +4,7 @@ extends Node2D
 @export var choice_yes: Button
 @export var choice_no: Button
 @export var next_round_button: Button
+@export var damage_info: RichTextLabel
 
 @onready var player_class_label: RichTextLabel = $PlayerClass
 @onready var enemy_class_label: RichTextLabel = $EnemyClass
@@ -16,7 +17,7 @@ const CLASSES = ["Warrior", "Healer", "Thief"]
 
 var enemy_class = CLASSES[randi() % CLASSES.size()]
 var player_class = Globals.player_class
-var game_round = 1
+var game_round = 0
 var enemy_hp = 20
 var player_hp = 20
 var enemy_blocked = false
@@ -25,15 +26,18 @@ var enemy_stolen = false
 var player_blocked = false
 var player_healed = false
 var player_stolen = false
-var yes = true
+var action_value = 0
+var player_choice = ""
 
 func _ready() -> void:
-	round_indicator.append_text(str(game_round))
+	round_indicator.text = "Click the start button to start!"
 	player_class_label.append_text(player_class)
 	enemy_class_label.append_text(enemy_class)
 	player_hp_label.append_text(str(player_hp))
 	enemy_hp_label.append_text(str(enemy_hp))
-	next_round_button.disabled = true
+	next_round_button.text = "START"
+	choice_yes.disabled = true
+	choice_no.disabled = true
 	
 	if player_class == "Warrior":
 		choice_yes.text = "Block"
@@ -47,21 +51,44 @@ func _ready() -> void:
 		choice_yes.text = "Steal"
 		choice_no.text = "Don't steal"
 
-func _on_choice_yes_pressed() -> void:
-	pass # Replace with function body.
+func check_action():
+	if player_blocked == true or player_healed == true or player_stolen == true:
+		return true
+	
+	else:
+		return false
 
-func player_action(choice):
-	if player_class == "Warrior" and player_blocked == false and choice == 1:
-		choice_yes.text = "Block"
-		choice_no.text = "Don't block"
+func _on_choice_yes_pressed() -> void:
+	action_value = randi_range(1, 4)
+	player_choice = 1
+	
+	if player_class == "Warrior":
+		info_message.clear()
+		info_message.add_text("You will block " + str(action_value) + " of the enemy's attack next round.")
+		player_blocked = true
+	
+	elif player_class == "Healer":
+		player_hp += action_value
+		info_message.clear()
+		info_message.add_text("You healed " + str(action_value) + " HP")
+		player_hp_label.clear()
+		player_hp_label.add_text("Player HP: %s" %[player_hp])
+		player_healed = true
+	
+	elif player_class == "Thief":
+		info_message.clear()
+		info_message.add_text("You will steal " + str(action_value) + " from enemy's damage next round.")
+		player_stolen = true
+	
+	next_round_button.disabled = false
 
 func enemy_counteraction(choice):
+	var enemy_action_value = randi_range(1, 4)
+	
 	if enemy_class == "Warrior" and enemy_blocked == false and choice == 1:
-		var enemy_blocked_dmg = randi_range(1, 4)
 		info_message.clear()
-		info_message.add_text("Enemy blocked " + str(enemy_blocked_dmg) + " of your attack")
+		info_message.add_text("Enemy blocked " + str(enemy_action_value) + " of your attack")
 		enemy_blocked = true
-		return enemy_blocked_dmg
 	
 	elif enemy_class == "Warrior" and enemy_blocked == false and choice == 2:
 		info_message.clear()
@@ -69,11 +96,11 @@ func enemy_counteraction(choice):
 		return 0
 	
 	elif enemy_class == "Healer" and enemy_healed == false and choice == 1 and enemy_hp < 20:
-		var enemy_healed_dmg = randi_range(1, 4)
 		info_message.clear()
-		info_message.add_text("Enemy healed " + str(enemy_healed_dmg) + " HP")
+		info_message.add_text("Enemy healed " + str(enemy_action_value) + " HP")
+		enemy_hp_label.clear()
+		enemy_hp_label.add_text("Enemy HP: %s" %[enemy_hp])
 		enemy_healed = true
-		return enemy_healed_dmg
 	
 	elif enemy_class == "Healer" and enemy_healed == false and choice == 2:
 		info_message.clear()
@@ -81,11 +108,9 @@ func enemy_counteraction(choice):
 		return 0
 	
 	elif enemy_class == "Thief" and enemy_stolen == false and choice == 1:
-		var enemy_stolen_dmg = randi_range(1, 4)
 		info_message.clear()
-		info_message.add_text("Enemy stole " + str(enemy_stolen_dmg) + " of your damage!")
+		info_message.add_text("Enemy stole " + str(enemy_action_value) + " of your damage!")
 		enemy_stolen = true
-		return enemy_stolen_dmg
 	
 	elif enemy_class == "Thief" and enemy_stolen == false and choice == 2:
 		info_message.clear()
@@ -96,16 +121,38 @@ func enemy_counteraction(choice):
 		info_message.clear()
 		info_message.add_text("Enemy did not do anything...")
 		return 0
+	
+	return enemy_action_value
 
 func _on_attack_button_pressed() -> void: # Next round button
 	var player_attack = randi_range(1, 20)
 	var enemy_attack = randi_range(1, 20)
 	var enemy_choice = randi_range(1, 2)
+	next_round_button.text = "NEXT ROUND"
 	
 	game_round += 1
 	
 	round_indicator.clear()
 	round_indicator.add_text("ROUND: %s" %[str(game_round)])
+	
+	print(check_action())
+	
+	if check_action() == false:
+		choice_yes.disabled = false
+		choice_no.disabled = false
+		next_round_button.disabled = true
+		
+		if player_class == "Warrior":
+			enemy_attack -= action_value
+		
+		elif player_class == "Thief":
+			enemy_attack -= action_value
+			player_attack += action_value
+	
+	else:
+		choice_yes.disabled = true
+		choice_no.disabled = true
+		next_round_button.disabled = false
 	
 	# Enemy counteraction
 	if enemy_class == "Warrior":
@@ -140,6 +187,8 @@ func _on_attack_button_pressed() -> void: # Next round button
 		attack_info.clear()
 		attack_info.add_text("It's a tie...")
 	
+	damage_info.text = "Player attacked with %s\n" %[player_attack]
+	damage_info.add_text("Enemy attacked with %s" %[enemy_attack])
 	player_hp_label.clear()
 	player_hp_label.add_text("Player HP: %s" %[player_hp])
 	enemy_hp_label.clear()

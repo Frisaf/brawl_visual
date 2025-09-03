@@ -4,12 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://do5fu0nubqs27" path="res://Resources/Demo Character.png" id="2_3dryh"]
 [ext_resource type="Texture2D" uid="uid://brdiuwmrgn2fv" path="res://Resources/Demo Enemy.png" id="3_wowpa"]
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("round_indicator", "choice_yes", "choice_no", "next_round_button")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("round_indicator", "choice_yes", "choice_no", "next_round_button", "damage_info")]
 script = ExtResource("1_wrm1d")
 round_indicator = NodePath("RoundIndicator")
 choice_yes = NodePath("ButtonContainer/ChoiceYes")
 choice_no = NodePath("ButtonContainer/ChoiceNo")
 next_round_button = NodePath("ButtonContainer/NextRoundButton")
+damage_info = NodePath("DamageInfo")
 
 [node name="DemoCharacter" type="Sprite2D" parent="."]
 position = Vector2(169, 317)
@@ -22,7 +23,7 @@ texture = ExtResource("3_wowpa")
 [node name="RoundIndicator" type="RichTextLabel" parent="."]
 offset_left = 359.0
 offset_top = 30.0
-offset_right = 496.135
+offset_right = 708.0
 offset_bottom = 70.0
 text = "ROUND: "
 
@@ -55,16 +56,25 @@ offset_bottom = 199.0
 text = "Enemy HP: "
 
 [node name="InfoMessage" type="RichTextLabel" parent="."]
-offset_left = 302.0
-offset_top = 127.0
-offset_right = 609.0
-offset_bottom = 246.0
+offset_left = 299.0
+offset_top = 273.0
+offset_right = 606.0
+offset_bottom = 392.0
+text = "Action info will be displayed here."
+
+[node name="DamageInfo" type="RichTextLabel" parent="."]
+offset_left = 300.0
+offset_top = 129.0
+offset_right = 596.0
+offset_bottom = 232.0
+text = "Damage info will be displayed here."
 
 [node name="AttackInfo" type="RichTextLabel" parent="."]
-offset_left = 303.0
-offset_top = 300.0
-offset_right = 610.0
-offset_bottom = 387.0
+offset_left = 301.0
+offset_top = 414.0
+offset_right = 608.0
+offset_bottom = 501.0
+text = "Final attack info will be displayed here."
 
 [node name="ButtonContainer" type="HBoxContainer" parent="."]
 offset_left = 657.0
@@ -74,11 +84,11 @@ offset_bottom = 624.0
 
 [node name="ChoiceYes" type="Button" parent="ButtonContainer"]
 layout_mode = 2
-text = "dsdsds"
+text = "Yes"
 
 [node name="ChoiceNo" type="Button" parent="ButtonContainer"]
 layout_mode = 2
-text = "sdsdsds"
+text = "No"
 
 [node name="NextRoundButton" type="Button" parent="ButtonContainer"]
 layout_mode = 2
