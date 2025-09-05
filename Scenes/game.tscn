@@ -105,4 +105,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="ButtonContainer/ChoiceYes" to="." method="_on_choice_yes_pressed"]
+[connection signal="pressed" from="ButtonContainer/ChoiceNo" to="." method="_on_choice_no_pressed"]
 [connection signal="pressed" from="ButtonContainer/NextRoundButton" to="." method="_on_attack_button_pressed"]

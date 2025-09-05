@@ -56,6 +56,9 @@ func check_action():
 		return true
 	
 	else:
+		if player_hp >= 20 and player_class == "Healer":
+			return true
+			
 		return false
 
 func _on_choice_yes_pressed() -> void:
@@ -65,7 +68,6 @@ func _on_choice_yes_pressed() -> void:
 	if player_class == "Warrior":
 		info_message.clear()
 		info_message.add_text("You will block " + str(action_value) + " of the enemy's attack next round.")
-		player_blocked = true
 	
 	elif player_class == "Healer":
 		player_hp += action_value
@@ -78,7 +80,6 @@ func _on_choice_yes_pressed() -> void:
 	elif player_class == "Thief":
 		info_message.clear()
 		info_message.add_text("You will steal " + str(action_value) + " from enemy's damage next round.")
-		player_stolen = true
 	
 	next_round_button.disabled = false
 
@@ -135,8 +136,6 @@ func _on_attack_button_pressed() -> void: # Next round button
 	round_indicator.clear()
 	round_indicator.add_text("ROUND: %s" %[str(game_round)])
 	
-	print(check_action())
-	
 	if check_action() == false:
 		choice_yes.disabled = false
 		choice_no.disabled = false
@@ -144,10 +143,12 @@ func _on_attack_button_pressed() -> void: # Next round button
 		
 		if player_class == "Warrior":
 			enemy_attack -= action_value
+			player_blocked = true
 		
 		elif player_class == "Thief":
 			enemy_attack -= action_value
 			player_attack += action_value
+			player_stolen = true
 	
 	else:
 		choice_yes.disabled = true
@@ -196,6 +197,15 @@ func _on_attack_button_pressed() -> void: # Next round button
 	
 	if player_hp <= 0:
 		print("Enemy won")
+		next_round_button.disabled = true
 	
 	elif enemy_hp <= 0:
 		print("Player won")
+		next_round_button.disabled = true
+
+func _on_choice_no_pressed() -> void:
+	choice_yes.disabled = true
+	choice_no.disabled = true
+	next_round_button.disabled = false
+	info_message.clear()
+	info_message.add_text("Player did not do anything.")
