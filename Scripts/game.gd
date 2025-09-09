@@ -5,13 +5,13 @@ extends Node2D
 @export var choice_no: Button
 @export var next_round_button: Button
 @export var damage_info: RichTextLabel
-
-@onready var player_class_label: RichTextLabel = $PlayerClass
-@onready var enemy_class_label: RichTextLabel = $EnemyClass
-@onready var player_hp_label: RichTextLabel = $PlayerHP
-@onready var enemy_hp_label: RichTextLabel = $EnemyHP
-@onready var info_message: RichTextLabel = $InfoMessage
-@onready var attack_info: RichTextLabel = $AttackInfo
+@export var player_class_label: RichTextLabel
+@export var enemy_class_label: RichTextLabel
+@export var player_hp_label: RichTextLabel
+@export var enemy_hp_label: RichTextLabel
+@export var info_message: RichTextLabel
+@export var attack_info: RichTextLabel
+@export var game_over: Node2D
 
 const CLASSES = ["Warrior", "Healer", "Thief"]
 
@@ -188,7 +188,8 @@ func _on_attack_button_pressed() -> void: # Next round button
 		attack_info.clear()
 		attack_info.add_text("It's a tie...")
 	
-	damage_info.text = "Player attacked with %s\n" %[player_attack]
+	damage_info.clear()
+	damage_info.add_text("Player attacked with %s\n" %[player_attack])
 	damage_info.add_text("Enemy attacked with %s" %[enemy_attack])
 	player_hp_label.clear()
 	player_hp_label.add_text("Player HP: %s" %[player_hp])
@@ -196,12 +197,14 @@ func _on_attack_button_pressed() -> void: # Next round button
 	enemy_hp_label.add_text("Enemy HP: %s" %[enemy_hp])
 	
 	if player_hp <= 0:
-		print("Enemy won")
+		game_over.visible = true
 		next_round_button.disabled = true
+		Globals.winner = "Enemy"
 	
 	elif enemy_hp <= 0:
-		print("Player won")
+		game_over.visible = true
 		next_round_button.disabled = true
+		Globals.winner = "Player"
 
 func _on_choice_no_pressed() -> void:
 	choice_yes.disabled = true
@@ -209,3 +212,22 @@ func _on_choice_no_pressed() -> void:
 	next_round_button.disabled = false
 	info_message.clear()
 	info_message.add_text("Player did not do anything.")
+
+func _process(delta: float) -> void:
+	if choice_yes.disabled == true:
+		choice_yes.mouse_default_cursor_shape = Control.CURSOR_ARROW
+	
+	else:
+		choice_yes.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
+	if choice_no.disabled == true:
+		choice_no.mouse_default_cursor_shape = Control.CURSOR_ARROW
+	
+	else:
+		choice_no.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
+	if next_round_button.disabled == true:
+		next_round_button.mouse_default_cursor_shape = Control.CURSOR_ARROW
+	
+	else:
+		next_round_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND

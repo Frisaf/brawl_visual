@@ -1,101 +1,117 @@
-[gd_scene load_steps=4 format=3 uid="uid://buhwjbjnoa31m"]
+[gd_scene load_steps=5 format=3 uid="uid://buhwjbjnoa31m"]
 
 [ext_resource type="Script" uid="uid://dtsov1coydqb2" path="res://Scripts/game.gd" id="1_wrm1d"]
 [ext_resource type="Texture2D" uid="uid://do5fu0nubqs27" path="res://Resources/Demo Character.png" id="2_3dryh"]
+[ext_resource type="PackedScene" uid="uid://dv8iy62coi225" path="res://Scenes/game_over.tscn" id="2_wowpa"]
 [ext_resource type="Texture2D" uid="uid://brdiuwmrgn2fv" path="res://Resources/Demo Enemy.png" id="3_wowpa"]
 
-[node name="Game" type="Node2D" node_paths=PackedStringArray("round_indicator", "choice_yes", "choice_no", "next_round_button", "damage_info")]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("round_indicator", "choice_yes", "choice_no", "next_round_button", "damage_info", "player_class_label", "enemy_class_label", "player_hp_label", "enemy_hp_label", "info_message", "attack_info", "game_over")]
 script = ExtResource("1_wrm1d")
-round_indicator = NodePath("RoundIndicator")
-choice_yes = NodePath("ButtonContainer/ChoiceYes")
-choice_no = NodePath("ButtonContainer/ChoiceNo")
-next_round_button = NodePath("ButtonContainer/NextRoundButton")
-damage_info = NodePath("DamageInfo")
+round_indicator = NodePath("GameContainer/RoundIndicator")
+choice_yes = NodePath("GameContainer/ButtonContainer/ChoiceYes")
+choice_no = NodePath("GameContainer/ButtonContainer/ChoiceNo")
+next_round_button = NodePath("GameContainer/ButtonContainer/NextRoundButton")
+damage_info = NodePath("GameContainer/DamageInfo")
+player_class_label = NodePath("GameContainer/PlayerClass")
+enemy_class_label = NodePath("GameContainer/EnemyClass")
+player_hp_label = NodePath("GameContainer/PlayerHP")
+enemy_hp_label = NodePath("GameContainer/EnemyHP")
+info_message = NodePath("GameContainer/InfoMessage")
+attack_info = NodePath("GameContainer/AttackInfo")
+game_over = NodePath("GameOver")
 
-[node name="DemoCharacter" type="Sprite2D" parent="."]
+[node name="GameOver" parent="." instance=ExtResource("2_wowpa")]
+visible = false
+
+[node name="GameContainer" type="Node" parent="."]
+
+[node name="DemoCharacter" type="Sprite2D" parent="GameContainer"]
 position = Vector2(169, 317)
 texture = ExtResource("2_3dryh")
 
-[node name="DemoEnemy" type="Sprite2D" parent="."]
+[node name="DemoEnemy" type="Sprite2D" parent="GameContainer"]
 position = Vector2(798, 354)
 texture = ExtResource("3_wowpa")
 
-[node name="RoundIndicator" type="RichTextLabel" parent="."]
+[node name="RoundIndicator" type="RichTextLabel" parent="GameContainer"]
 offset_left = 359.0
 offset_top = 30.0
 offset_right = 708.0
 offset_bottom = 70.0
 text = "ROUND: "
 
-[node name="PlayerClass" type="RichTextLabel" parent="."]
+[node name="PlayerClass" type="RichTextLabel" parent="GameContainer"]
 offset_left = 90.0
 offset_top = 516.0
 offset_right = 256.0
 offset_bottom = 556.0
 text = "Class: "
 
-[node name="EnemyClass" type="RichTextLabel" parent="."]
+[node name="EnemyClass" type="RichTextLabel" parent="GameContainer"]
 offset_left = 649.0
 offset_top = 514.0
 offset_right = 815.0
 offset_bottom = 554.0
 text = "Class: "
 
-[node name="PlayerHP" type="RichTextLabel" parent="."]
+[node name="PlayerHP" type="RichTextLabel" parent="GameContainer"]
 offset_left = 89.0
 offset_top = 83.0
 offset_right = 241.0
 offset_bottom = 123.0
 text = "Player HP: "
 
-[node name="EnemyHP" type="RichTextLabel" parent="."]
+[node name="EnemyHP" type="RichTextLabel" parent="GameContainer"]
 offset_left = 648.0
 offset_top = 159.0
 offset_right = 800.0
 offset_bottom = 199.0
 text = "Enemy HP: "
 
-[node name="InfoMessage" type="RichTextLabel" parent="."]
+[node name="InfoMessage" type="RichTextLabel" parent="GameContainer"]
 offset_left = 299.0
 offset_top = 273.0
 offset_right = 606.0
 offset_bottom = 392.0
 text = "Action info will be displayed here."
 
-[node name="DamageInfo" type="RichTextLabel" parent="."]
+[node name="DamageInfo" type="RichTextLabel" parent="GameContainer"]
 offset_left = 300.0
 offset_top = 129.0
 offset_right = 596.0
 offset_bottom = 232.0
 text = "Damage info will be displayed here."
 
-[node name="AttackInfo" type="RichTextLabel" parent="."]
+[node name="AttackInfo" type="RichTextLabel" parent="GameContainer"]
 offset_left = 301.0
 offset_top = 414.0
 offset_right = 608.0
 offset_bottom = 501.0
 text = "Final attack info will be displayed here."
 
-[node name="ButtonContainer" type="HBoxContainer" parent="."]
+[node name="ButtonContainer" type="HBoxContainer" parent="GameContainer"]
 offset_left = 657.0
 offset_top = 584.0
-offset_right = 793.0
+offset_right = 843.0
 offset_bottom = 624.0
 
-[node name="ChoiceYes" type="Button" parent="ButtonContainer"]
+[node name="ChoiceYes" type="Button" parent="GameContainer/ButtonContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "Yes"
 
-[node name="ChoiceNo" type="Button" parent="ButtonContainer"]
+[node name="ChoiceNo" type="Button" parent="GameContainer/ButtonContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 text = "No"
 
-[node name="NextRoundButton" type="Button" parent="ButtonContainer"]
+[node name="NextRoundButton" type="Button" parent="GameContainer/ButtonContainer"]
 layout_mode = 2
 tooltip_text = "Initiate the next round"
+mouse_default_cursor_shape = 2
 text = "NEXT ROUND"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="Instruction" type="RichTextLabel" parent="GameContainer"]
 offset_left = 357.0
 offset_top = 587.0
 offset_right = 649.0
@@ -104,6 +120,6 @@ text = "Press the buttons to make an action."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="ButtonContainer/ChoiceYes" to="." method="_on_choice_yes_pressed"]
-[connection signal="pressed" from="ButtonContainer/ChoiceNo" to="." method="_on_choice_no_pressed"]
-[connection signal="pressed" from="ButtonContainer/NextRoundButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="GameContainer/ButtonContainer/ChoiceYes" to="." method="_on_choice_yes_pressed"]
+[connection signal="pressed" from="GameContainer/ButtonContainer/ChoiceNo" to="." method="_on_choice_no_pressed"]
+[connection signal="pressed" from="GameContainer/ButtonContainer/NextRoundButton" to="." method="_on_attack_button_pressed"]

@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv8iy62coi225"]
+
+[ext_resource type="Script" uid="uid://ci8wc4lprgblx" path="res://Scenes/game_over.gd" id="1_ojehl"]
+
+[sub_resource type="SystemFont" id="SystemFont_i2yjh"]
+subpixel_positioning = 0
+
+[sub_resource type="SystemFont" id="SystemFont_ojehl"]
+subpixel_positioning = 0
+
+[node name="GameOver" type="Node2D" node_paths=PackedStringArray("winner")]
+z_index = 2
+script = ExtResource("1_ojehl")
+winner = NodePath("Panel/Winner")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 1
+offset_right = 1155.0
+offset_bottom = 651.0
+
+[node name="GAMEOVER" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 196.0
+offset_top = 71.0
+offset_right = 995.0
+offset_bottom = 275.0
+theme_override_fonts/normal_font = SubResource("SystemFont_i2yjh")
+theme_override_font_sizes/normal_font_size = 137
+text = "GAME OVER"
+metadata/_edit_use_anchors_ = true
+
+[node name="Winner" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 248.0
+offset_right = 974.0
+offset_bottom = 328.0
+theme_override_fonts/normal_font = SubResource("SystemFont_ojehl")
+theme_override_font_sizes/normal_font_size = 56
+text = "Winner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 281.0
+offset_top = 414.0
+offset_right = 886.0
+offset_bottom = 480.0
+
+[node name="PlayAgain" type="Button" parent="Panel/ButtonContainer"]
+z_index = 2
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Play again"
+
+[node name="Quit" type="Button" parent="Panel/ButtonContainer"]
+z_index = 2
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Quit"
+
+[connection signal="pressed" from="Panel/ButtonContainer/PlayAgain" to="." method="_on_play_again_pressed"]
+[connection signal="pressed" from="Panel/ButtonContainer/Quit" to="." method="_on_quit_pressed"]
