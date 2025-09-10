@@ -28,6 +28,7 @@ var player_healed = false
 var player_stolen = false
 var action_value = 0
 var player_choice = ""
+var no_button_pressed = false
 
 func _ready() -> void:
 	round_indicator.text = "Click the start button to start!"
@@ -51,7 +52,12 @@ func _ready() -> void:
 		choice_yes.text = "Steal"
 		choice_no.text = "Don't steal"
 
+# If it returns false, the yes/no buttons will be enabled. Else, they'll be disabled.
+# true = action done, false = no action done
 func check_action():
+	if no_button_pressed == true:
+		return true
+		
 	if player_blocked == true or player_healed == true or player_stolen == true:
 		return true
 	
@@ -129,6 +135,7 @@ func _on_attack_button_pressed() -> void: # Next round button
 	var player_attack = randi_range(1, 20)
 	var enemy_attack = randi_range(1, 20)
 	var enemy_choice = randi_range(1, 2)
+	
 	next_round_button.text = "NEXT ROUND"
 	
 	game_round += 1
@@ -149,6 +156,12 @@ func _on_attack_button_pressed() -> void: # Next round button
 			enemy_attack -= action_value
 			player_attack += action_value
 			player_stolen = true
+	
+	elif no_button_pressed == true:
+		choice_yes.disabled = false
+		choice_no.disabled = false
+		next_round_button.disabled = true
+		no_button_pressed = false
 	
 	else:
 		choice_yes.disabled = true
@@ -212,6 +225,7 @@ func _on_choice_no_pressed() -> void:
 	next_round_button.disabled = false
 	info_message.clear()
 	info_message.add_text("Player did not do anything.")
+	no_button_pressed = true
 
 func _process(delta: float) -> void:
 	if choice_yes.disabled == true:
