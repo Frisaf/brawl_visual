@@ -12,6 +12,7 @@ extends Node2D
 @export var info_message: RichTextLabel
 @export var attack_info: RichTextLabel
 @export var game_over: Node2D
+@export var player: Sprite2D
 
 const CLASSES = ["Warrior", "Healer", "Thief"]
 
@@ -19,7 +20,7 @@ var enemy_class = CLASSES[randi() % CLASSES.size()]
 var player_class = Globals.player_class
 var game_round = 0
 var enemy_hp = 20
-var player_hp = 20
+var player_hp = player."player_hp"
 var enemy_blocked = false
 var enemy_healed = false
 var enemy_stolen = false

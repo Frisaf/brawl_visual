@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://buhwjbjnoa31m"]
+[gd_scene load_steps=7 format=3 uid="uid://buhwjbjnoa31m"]
 
 [ext_resource type="Script" uid="uid://dtsov1coydqb2" path="res://Scripts/game.gd" id="1_wrm1d"]
 [ext_resource type="Texture2D" uid="uid://do5fu0nubqs27" path="res://Resources/Demo Character.png" id="2_3dryh"]
 [ext_resource type="PackedScene" uid="uid://dv8iy62coi225" path="res://Scenes/game_over.tscn" id="2_wowpa"]
 [ext_resource type="Texture2D" uid="uid://brdiuwmrgn2fv" path="res://Resources/Demo Enemy.png" id="3_wowpa"]
+[ext_resource type="Script" uid="uid://d0gptcpq81o23" path="res://Scripts/player.gd" id="4_i6g32"]
+[ext_resource type="PackedScene" uid="uid://cnh2qjn2sq1a5" path="res://Scenes/health_bar.tscn" id="4_wowpa"]
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("round_indicator", "choice_yes", "choice_no", "next_round_button", "damage_info", "player_class_label", "enemy_class_label", "player_hp_label", "enemy_hp_label", "info_message", "attack_info", "game_over")]
 script = ExtResource("1_wrm1d")
@@ -28,6 +30,15 @@ visible = false
 [node name="DemoCharacter" type="Sprite2D" parent="GameContainer"]
 position = Vector2(169, 317)
 texture = ExtResource("2_3dryh")
+script = ExtResource("4_i6g32")
+player_hp = 20
+
+[node name="HealthBar" parent="GameContainer/DemoCharacter" node_paths=PackedStringArray("character") instance=ExtResource("4_wowpa")]
+offset_left = -116.209
+offset_top = -395.385
+offset_right = 11.791
+offset_bottom = -267.385
+character = NodePath("..")
 
 [node name="DemoEnemy" type="Sprite2D" parent="GameContainer"]
 position = Vector2(798, 354)
